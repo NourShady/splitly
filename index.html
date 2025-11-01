@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+
+
+    <title>Splitly</title>
+    <style>
+        html,
+        body {
+            height: 100% !important;
+
+
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #f9fff9;
+            color: #2e4d2e;
+
+        }
+
+        header {
+            background-color: #a8e6a1;
+            color: #2e4d2e;
+            padding: 1rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100vw;
+            left: 0;
+            top: 0;
+        }
+
+        /* nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #dfffe0;
+      padding: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #2e4d2e;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #1a331a;
+    } */
+
+        .container {
+            margin: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            font-size: 0.95rem;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            background-color: #a8e6a1;
+            color: #2e4d2e;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: #89d789;
+        }
+
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #a8e6a1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .fab:hover {
+            background-color: #4caf50;
+        }
+
+        .fab-up {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #a8e6a1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .fab-up:hover {
+            background-color: #4caf50;
+        }
+
+        .fab-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #a8e6a1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .fab-left:hover {
+            background-color: #4caf50;
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            animation: popup 0.3s ease-in-out;
+        }
+
+        .icon {
+            width: 50px;
+        }
+
+        .icon-small {
+            margin-right: 5px;
+            width: 20px;
+        }
+
+        @keyframes popup {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .header-name {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+    </style>
+    <style>
+        .block {
+            margin-bottom: 1rem;
+            border: 1px solid #cce5cc;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .block-header {
+            background: #a8e6a1;
+            color: #2e4d2e;
+            padding: 0.6rem 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .block-header span {
+            font-size: 0.95rem;
+        }
+
+        .block-content {
+            display: block;
+            border-top: 1px solid #cce5cc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .qty {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .name {
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        .price-row {
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .price-row td {
+            padding-top: 0;
+        }
+
+        .subtotal {
+            text-align: right;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+    <style>
+        .name-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .name-option {
+            background: #a8e6a1;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+
+        .name-option:hover {
+            background: #89d789;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        button.btn {
+            margin-top: 1rem;
+            padding: 0.6rem;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button.btn:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+    <style>
+        /* .modal-content {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 320px;
+            font-family: monospace;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        } */
+
+        .receipt-title {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #000;
+            padding-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            padding-top: 8px;
+        }
+
+        .item-qty-price {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .item-total {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .receipt-total td {
+            border-top: 2px solid #000;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+
+        .receipt-footer {
+            text-align: center;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+    </style>
+    <style>
+        .person-control {
+            display: flex;
+            /* justify-content: space-between; */
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .person-control button {
+            background: #a8e6a1;
+            border: none;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .casher-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .casher-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .casher-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .note-btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .note-btn:hover {
+            background: #1976d2;
+        }
+
+        .reset-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .reset-btn:hover {
+            background: #c62828;
+        }
+
+        .scrollable {
+            overflow-y: scroll;
+            max-height: 65vh;
+        }
+
+        .textOflastStep {
+            text-align: left;
+            padding: 10px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        Splitly
+    </header>
+    <div style="height: 50px;">
+
+    </div>
+    <!-- <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome 🌱</h1>
+    <p>
+      This is a mobile-first website with a light green and white theme.
+      The floating button in the corner opens a popup.
+    </p>
+    <a href="#" class="btn">Get Started</a>
+  </div> -->
+    <div id="persons"></div>
+
+
+
+    <!-- Floating Button -->
+    <div class="fab-left" onclick="openModal('receiptModal')"><img class="icon" src="receipt.png" alt="" srcset="">
+    </div>
+    <div class="fab" onclick="openModal('addModal')"><img class="icon" src="add.png" alt="" srcset=""></div>
+    <div class="fab-up" onclick="openModal('casherModal')"><img class="icon" src="casher.png" alt="" srcset=""></div>
+
+    <!-- Popup Modal -->
+    <div class="modal" id="casherModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('casherModal',false)">&times;</span>
+            <h2 class="receipt-title">Casher</h2>
+
+            <div id="casherContainer" class="scrollable">
+
+            </div>
+
+            <div id="lastStep" style="display: none;">
+                <!-- <div id="lastStep" class="textOflastStep"> -->
+
+
+            </div>
+
+            <div class="receipt-footer">
+                <!-- <a href="#" class="btn" onclick="closeModal('receiptModal')">OK</a> -->
+                <button  class="btn" onclick="toggleCasher()" id="toggleCasher">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="modal" id="receiptModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('receiptModal')">&times;</span>
+            <h2 class="receipt-title">Receipt</h2>
+
+            <div id="receiptContainer" class="scrollable">
+                <!-- Receipt table will be generated here -->
+            </div>
+
+            <div class="receipt-footer">
+                <a href="#" class="btn" onclick="closeModal('receiptModal')">OK</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Popup Modal -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('addModal')">&times;</span>
+            <h3>Add Item</h3>
+
+            <!-- Client list -->
+            <div class="name-list" id="clientList">
+
+            </div>
+
+            <!-- Form -->
+            <form id="addForm">
+                <label for="clientName">Client Name</label>
+                <input type="text" id="clientName" name="clientName" placeholder="Type or select client" required>
+
+                <label for="itemName">Item Name</label>
+                <input list="itemNames" id="itemName" name="itemName" placeholder="Choose item" required
+                    onchange="setPrice(this)">
+                <datalist id="itemNames">
+
+                </datalist>
+
+                <label for="itemQty">Quantity</label>
+                <input type="number" id="itemQty" name="itemQty" min="1" value="1" required>
+
+                <label for="itemPrice">Price</label>
+                <input type="number" id="itemPrice" name="itemPrice" step="0.01" placeholder="0.00" required>
+
+                <button type="submit" class="btn" id="addNewItem">✔ Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('editModal')">&times;</span>
+            <h3>Edit Item</h3>
+            <h5 id="editPersonName"></h5> <!-- dynamically set person’s name -->
+
+            <div class="block-content" style="display: block;" class="scrollable">
+                <table id="editTable"></table>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 200px;">
+
+    </div>
+    <script>
+        var fees = 0; // flat fees
+        var tax = 0;  // percentage tax
+        var grandTotal = 0;
+        // var order_per_person = {};
+
+        var peopleData = [
+            // { name: "Nour", toPay: 155, paidNotes: { 200: 1 }, paidTotal: 0 },
+            // { name: "Test", toPay: 270, paidNotes: { 100: 2, 50: 1, 20: 1 }, paidTotal: 0 }
+        ];
+
+        const noteValues = [200, 100, 50, 20, 10, 5, 1];
+
+        var order_per_person = {
+            "Nour": [
+                {
+                    "item": "Tea",
+                    "qty": 2,
+                    "price": 10,
+                    "total": 20
+                },
+                {
+                    "item": "Water",
+                    "qty": 1,
+                    "price": 15,
+                    "total": 15
+                }
+            ],
+            "hackoro": [
+                {
+                    "item": "Tea",
+                    "qty": 1,
+                    "price": 10,
+                    "total": 10
+                },
+                {
+                    "item": "Water",
+                    "qty": 2,
+                    "price": 15,
+                    "total": 30
+                }
+            ]
+        };
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function generateBlocks(data) {
+            const container = document.getElementById("persons");
+            container.innerHTML = ""; // clear old content
+
+            // 1. Calculate total before tax/fees (for all persons)
+            let grandTotal = 0;
+            const personsTotals = {};
+
+            const persons = Object.keys(order_per_person); // ["Nour", "hackoro"]
+            const personsCount = persons.length;
+
+
+            // console.log(personsCount);
+            Object.entries(data).forEach(([personName, items]) => {
+                const aggregated = {};
+                items.forEach(item => {
+                    if (!aggregated[item.item]) {
+                        aggregated[item.item] = { qty: 0, price: item.price };
+                    }
+                    aggregated[item.item].qty += item.qty;
+                });
+
+                const total = Object.values(aggregated)
+                    .reduce((sum, item) => sum + (item.qty * item.price), 0);
+
+                personsTotals[personName] = { aggregated, total };
+                grandTotal += total;
+            });
+
+            // 2. Build each person's block with their share of tax + fees
+            Object.entries(personsTotals).forEach(([personName, { aggregated, total }]) => {
+                // share of tax and fees
+                const taxAmount = total * (tax / 100);
+                const feesAmount = (personsCount > 0) ? fees / personsCount : 0;
+
+                const finalTotal = total + taxAmount + feesAmount;
+
+
+                upsertPerson({
+                    name: personName,
+                    toPay: finalTotal,
+                    paidNotes: {},
+                    paidTotal: 0
+                });
+
+
+                // block
+                const block = document.createElement("div");
+                block.className = "block";
+
+                // header
+                const header = document.createElement("div");
+                header.className = "block-header";
+                header.setAttribute("onclick", "toggleBlock(this)");
+                header.innerHTML = `<span class="header-name"> <span onclick="deletePerson('${personName}')"><img class="icon-small" src="delete.png" alt="" srcset=""></span> ${personName}</span><span>${finalTotal.toFixed(2)}</span>`;
+                block.appendChild(header);
+
+                // content
+                const content = document.createElement("div");
+                content.className = "block-content";
+                content.style.display = "block";
+
+                // items table
+                const table = document.createElement("table");
+                Object.entries(aggregated).forEach(([itemName, info]) => {
+                    const row1 = document.createElement("tr");
+                    row1.innerHTML = `<td class="qty">${info.qty}</td><td class="name">${itemName}</td>`;
+                    table.appendChild(row1);
+
+                    const row2 = document.createElement("tr");
+                    row2.className = "price-row";
+                    const subtotal = (info.qty * info.price).toFixed(2);
+                    row2.innerHTML = `<td>${info.price.toFixed(2)}</td><td class="subtotal">${subtotal}</td>`;
+                    table.appendChild(row2);
+                });
+
+                // tax row
+                if (tax > 0) {
+                    const taxRow = document.createElement("tr");
+                    taxRow.className = "price-row";
+                    taxRow.innerHTML = `<td>Tax (${tax}%)</td><td class="subtotal">${taxAmount.toFixed(2)}</td>`;
+                    table.appendChild(taxRow);
+                }
+
+                // fees row
+                if (fees > 0) {
+                    const feesRow = document.createElement("tr");
+                    feesRow.className = "price-row";
+                    feesRow.innerHTML = `<td>Fees share</td><td class="subtotal">${feesAmount.toFixed(2)}</td>`;
+                    table.appendChild(feesRow);
+                }
+
+                // final total row
+                const finalRow = document.createElement("tr");
+                finalRow.className = "price-row";
+                finalRow.innerHTML = `<td><strong>Total</strong></td><td class="subtotal"><strong>${finalTotal.toFixed(2)}</strong></td>`;
+                table.appendChild(finalRow);
+
+                content.appendChild(table);
+                block.appendChild(content);
+
+                // control buttons
+                const control_div = document.createElement("div");
+                control_div.className = "person-control";
+                control_div.innerHTML = `<button onclick="openEditModal('${personName}')" class="header-name"><img class="icon-small" src="edit.png" alt="" srcset="" style="margin-right:0"> | Edit</button>`;
+                block.appendChild(control_div);
+
+                container.appendChild(block);
+            });
+        }
+
+        // toggle open/close
+        function toggleBlock(el) {
+            const content = el.nextElementSibling;
+            content.style.display = (content.style.display == 'block') ? "none" : "block";
+        }
+
+        // Generate from array
+
+        function toggleBlock(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+
+        function pickClient(name) {
+            document.getElementById("clientName").value = name;
+        }
+
+
+        document.getElementById("addForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const client = document.getElementById("clientName").value.trim();
+            const item = document.getElementById("itemName").value.trim();
+            const qty = parseFloat(document.getElementById("itemQty").value) || 0;
+            const price = parseFloat(document.getElementById("itemPrice").value) || 0;
+            const total = qty * price;
+
+            if (!client) {
+                alert("Please enter client name");
+                return;
+            }
+
+            // 🔎 Check if item exists elsewhere and price mismatch
+            let currentPrice = null;
+            for (let person in order_per_person) {
+                order_per_person[person].forEach(order => {
+                    if (order.item.toLowerCase() === item.toLowerCase()) {
+                        currentPrice = order.price;
+                    }
+                });
+            }
+
+            if (currentPrice !== null && currentPrice !== price) {
+                const confirmUpdate = confirm(
+                    `${item} currently costs ${currentPrice}. Do you want to update all to ${price}?`
+                );
+                if (!confirmUpdate) {
+                    document.getElementById("itemPrice").value = currentPrice;
+                    return; // stop if user cancels
+                }
+
+                // ✅ Update all prices globally
+                for (let person in order_per_person) {
+                    order_per_person[person].forEach(order => {
+                        if (order.item.toLowerCase() === item.toLowerCase()) {
+                            order.price = price;
+                            order.total = order.qty * order.price;
+                        }
+                    });
+                }
+            }
+
+            // ✅ Add or update for this client
+            if (!order_per_person[client]) {
+                order_per_person[client] = [];
+            }
+
+            let existing = order_per_person[client].find(o => o.item.toLowerCase() === item.toLowerCase());
+            if (existing) {
+                existing.qty += qty;
+                existing.total = existing.qty * existing.price;
+            } else {
+                order_per_person[client].push({ item, qty, price, total });
+            }
+
+            // console.log(order_per_person);
+
+            // closeModal("addModal");
+            e.target.reset();
+            document.getElementById("clientName").value = client; // keep name
+            refreshAll()
+        });
+
+
+        function addUsers() {
+            var users_list = document.getElementById('clientList');
+            users_list.innerHTML = '';
+            for (let person in order_per_person) {
+                let btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'name-option';
+                btn.innerHTML = '👤 ' + person;
+                btn.onclick = function () { pickClient(person); };
+                users_list.appendChild(btn);
+            }
+        }
+        function addItemsToList() {
+            var item_list = document.getElementById('itemNames');
+            item_list.innerHTML = '';
+
+            // Use Map instead of Set (item → price)
+            let items_map = new Map();
+
+            for (let person in order_per_person) {
+                order_per_person[person].forEach(order => {
+                    items_map.set(order.item, order.price);
+                });
+            }
+
+            items_map.forEach((price, item) => {
+                let opt = document.createElement('option');
+                opt.value = item;
+                opt.textContent = `${item} - ${price}`; // show both
+                opt.dataset.price = price; // keep price stored
+                item_list.appendChild(opt);
+            });
+        }
+        function setPrice(elm) {
+            let val = elm.value;
+            let opts = document.getElementById('itemNames').options;
+            let price = '';
+            for (let i = 0; i < opts.length; i++) {
+                if (opts[i].value === val) {
+                    price = opts[i].dataset.price || '';
+                    break;
+                }
+            }
+            document.getElementById('itemPrice').value = price;
+        }
+        function openModal(elm) {
+            document.getElementById(elm).style.display = "flex";
+        }
+        function closeModal(elm , refresh = true) {
+            document.getElementById(elm).style.display = "none";
+            if(refresh){
+                refreshAll();
+            }
+        }
+        window.onclick = function (event) {
+            let modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function generateReceiptTable(data) {
+            const receiptTable = document.createElement("table");
+            receiptTable.className = "receipt-table";
+
+            const tbody = document.createElement("tbody");
+
+
+            const aggregated = {};
+
+            Object.values(data).forEach(personOrders => {
+                personOrders.forEach(order => {
+                    if (!aggregated[order.item]) {
+                        aggregated[order.item] = { qty: 0, price: order.price };
+                    }
+                    aggregated[order.item].qty += order.qty;
+                });
+            });
+
+
+            let grandTotal = 0;
+            Object.entries(aggregated).forEach(([itemName, info]) => {
+                const subtotal = info.qty * info.price;
+                grandTotal += subtotal;
+
+                const row1 = document.createElement("tr");
+                row1.innerHTML = `<td class="item-name" colspan="2">${itemName}</td>`;
+                tbody.appendChild(row1);
+
+
+                const row2 = document.createElement("tr");
+                row2.innerHTML = `<td class="item-qty-price">${info.qty} × $${info.price.toFixed(2)}</td>
+                      <td class="item-total">$${subtotal.toFixed(2)}</td>`;
+                tbody.appendChild(row2);
+            });
+
+            receiptTable.appendChild(tbody);
+
+
+            const tfoot = document.createElement("tfoot");
+            const totalRow = document.createElement("tr");
+            totalRow.className = "receipt-total";
+            totalRow.innerHTML = `<td><input type="number" id="tax" name="tax" min="0" onchange="taxAndFees(this , 'tax')" value="${tax === 0 ? '' : tax}" placeholder="tax in %" style="width:100px"></td><td><input type="number" value="${fees === 0 ? '' : fees}" onchange="taxAndFees(this , 'fees')" placeholder="fees" id="fees" name="fees" min="0"  style="width:100px"></td>`;
+
+            const feeRow = document.createElement("tr");
+            feeRow.className = "receipt-total";
+            // feeRow.innerHTML = `<td>Total</td><td id="receipt-total">$${grandTotal.toFixed(2)}</td>`;
+            feeRow.innerHTML = `<td>Total</td><td id="receipt-total">$${grandTotal = grandTotal + (grandTotal * (tax / 100)) + fees}</td>`;
+            ;
+            tfoot.appendChild(totalRow);
+            tfoot.appendChild(feeRow);
+            receiptTable.appendChild(tfoot);
+
+            const container = document.getElementById("receiptContainer");
+            container.innerHTML = "";
+            container.appendChild(receiptTable);
+
+
+            return receiptTable;
+        }
+
+
+        function taxAndFees(elm, type) {
+            if (type === 'tax') {
+                tax = parseFloat(elm.value) || 0;
+                // console.log(tax);
+            } else if (type === 'fees') {
+                fees = parseFloat(elm.value) || 0;
+                // console.log(fees);
+            }
+            refreshAll()
+
+        }
+
+        function openEditModal(personName) {
+            const modal = document.getElementById("editModal");
+            const table = document.getElementById("editTable");
+            const nameHeader = document.getElementById("editPersonName");
+
+            nameHeader.textContent = personName;
+            table.innerHTML = ""; // clear old rows
+
+            if (!order_per_person[personName]) return;
+
+            order_per_person[personName].forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.className = "price-row";
+                row.innerHTML = `
+            <td>
+                <input type="number" onchange="saveEdits('${personName}')" id="qty-${index}" value="${item.qty}" min="1" style="width:60px;">
+            </td>
+            <td>${item.item}</td>
+            <td class="subtotal">
+                <span onclick="deleteItem('${personName}', ${index})">⛔</span>
+            </td>
+        `;
+                table.appendChild(row);
+            });
+
+
+
+            modal.style.display = "flex"; // show modal
+        }
+
+        // Save function
+        function saveEdits(personName) {
+            if (!order_per_person[personName]) return;
+
+            order_per_person[personName].forEach((item, index) => {
+                const newQty = document.getElementById(`qty-${index}`).value;
+                item.qty = parseInt(newQty, 10) || 1; // update with new qty
+            });
+
+            // Close modal after saving
+            // document.getElementById("editModal").style.display = "none";
+            // console.log(order_per_person);
+            // Re-render your table or totals if needed
+            refreshAll() // <-- replace with your existing refresh function
+        }
+
+        // Delete function
+        function deleteItem(personName, itemIndex) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                order_per_person[personName].splice(itemIndex, 1);
+
+                // If person has no items left, remove them completely
+                // if (order_per_person[personName].length === 0) {
+                //     delete order_per_person[personName];
+                // }
+
+                // Refresh UI
+                openEditModal(personName);
+                generateBlocks(order_per_person);
+                generateReceiptTable(order_per_person);
+            }
+        }
+        function deletePerson(personName) {
+            delete order_per_person[personName]
+            refreshAll()
+        }
+
+
+        function renderCasherTable(peopleData) {
+            const container = document.getElementById("casherContainer");
+            container.innerHTML = ""; // reset
+
+            peopleData.forEach((person, index) => {
+                const table = document.createElement("table");
+                table.className = "casher-table";
+                table.innerHTML = `
+      <tbody>
+        <tr>
+          <td colspan="2"> <h2>
+            ${person.name} $<span>${person.toPay}</span> | 
+            $<span id="paid-${index}">${person.paidTotal}</span></h2>
+          </td>
+        </tr>
+        <tr>
+          <td id="buttons-${index}" colspan="2"></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="reset-btn" onclick="resetPerson(${index})">Reset</button>
+          </td>
+        </tr>
+      </tbody>
+    `;
+
+                // Add note buttons dynamically
+                const btnContainer = table.querySelector(`#buttons-${index}`);
+                noteValues.forEach(val => {
+                    const btn = document.createElement("button");
+                    btn.textContent = val;
+                    btn.className = "note-btn";
+                    btn.onclick = () => addNote(index, val);
+                    btnContainer.appendChild(btn);
+                });
+
+                container.appendChild(table);
+            });
+        }
+
+        function addNote(personIndex, noteValue) {
+            const person = peopleData[personIndex];
+            person.paidTotal += noteValue;
+            person.paidNotes[noteValue] = (person.paidNotes[noteValue] || 0) + 1;
+            document.getElementById(`paid-${personIndex}`).textContent = person.paidTotal;
+            upsertPerson(person)
+        }
+
+        function resetPerson(personIndex) {
+            const person = peopleData[personIndex];
+            person.paidTotal = 0;
+            person.paidNotes = {};
+            document.getElementById(`paid-${personIndex}`).textContent = "0";
+            // console.log("Reset:", JSON.stringify(peopleData, null, 2));
+        }
+
+        function upsertPerson(person) {
+            const index = peopleData.findIndex(p => p.name === person.name);
+
+            if (index !== -1) {
+                // Replace existing
+                peopleData[index] = person;
+                // console.log("Updated:", JSON.stringify(peopleData, null, 2));
+            } else {
+                // Add new
+
+                peopleData.push(person);
+                // console.log("Added:", JSON.stringify(peopleData, null, 2));
+            }
+
+        }
+
+        function startMoneyPool(peopleData) {
+            function calcTotal(notes) {
+                return Object.entries(notes).reduce((sum, [note, count]) => sum + note * count, 0);
+            }
+
+            function addToPool(pool, notes) {
+                for (let d in notes) {
+                    pool[d] = (pool[d] || 0) + notes[d];
+                }
+            }
+
+            function giveChange(pool, amount) {
+                let change = {};
+                let remaining = amount;
+
+                for (let d of noteValues) {
+                    let need = Math.floor(remaining / d);
+                    let available = pool[d] || 0;
+                    let give = Math.min(need, available);
+
+                    if (give > 0) {
+                        change[d] = give;
+                        pool[d] -= give;
+                        remaining -= d * give;
+                    }
+                }
+
+                return { change, remaining };
+            }
+
+            function suggestExchange(pool, missing) {
+                // Find a larger note to break
+                for (let d of noteValues) {
+                    if ((pool[d] || 0) > 0 && d > missing) {
+                        return `Need to exchange 1*${d} into smaller notes to cover ${missing}`;
+                    }
+                }
+                return `Not enough notes to exchange for ${missing}`;
+            }
+
+            function runSettlement(peopleData) {
+                let pool = {};
+                let results = [];
+
+                for (let f of peopleData) {
+                    addToPool(pool, f.paidNotes);
+                }
+
+                for (let f of peopleData) {
+                    let paid = calcTotal(f.paidNotes);
+                    let balance = paid - f.toPay;
+
+                    if (balance < 0) {
+                        results.push(`${f.name} still owes ${-balance}`);
+                        continue;
+                    }
+                    if (balance === 0) {
+                        results.push(`${f.name} paid exact`);
+                        continue;
+                    }
+
+                    let { change, remaining } = giveChange(pool, balance);
+
+                    if (remaining === 0) {
+                        let changeStr = Object.entries(change)
+                            .map(([d, c]) => `${c}*${d}`)
+                            .join(", ");
+                        results.push(`${f.name} gets back: ${changeStr}`);
+                    } else {
+                        let suggestion = suggestExchange(pool, remaining);
+                        results.push(`${f.name} should get ${balance}<br> missing ${remaining}<br> ${suggestion}`);
+                    }
+                }
+
+                // console.log(results);
+                return results;
+            }
+
+            document.getElementById("lastStep").innerHTML = runSettlement(peopleData).join("<hr>");
+        }
+
+
+        function toggleCasher() {
+            let casherContainer = document.getElementById("casherContainer");
+            let lastStep = document.getElementById("lastStep");
+            let toggleCasher = document.getElementById("toggleCasher");
+
+            if (casherContainer.style.display === "none") {
+                casherContainer.style.display = "block";
+                lastStep.style.display = "none";
+                toggleCasher.textContent = "Next";
+                lastStep.innerHTML = "";
+            } else {
+                casherContainer.style.display = "none";
+                lastStep.style.display = "block";
+                toggleCasher.textContent = "Previous";
+                startMoneyPool(peopleData)
+            }
+        }
+        // -----------------------------------------------------------------------------------------------------------------------
+        // openModal('addModal') // to be removed
+        // openModal('editModal')// to be removed
+        // openEditModal("Nour")// to be removed
+        // openModal('receiptModal') // to be removed
+        // openModal('casherModal') // to be removed
+        // startMoneyPool(peopleData) // to be removed
+        // renderCasherTable(); // to be removed
+
+
+        function refreshAll() {
+            addUsers();
+            addItemsToList();
+            generateBlocks(order_per_person);
+            generateReceiptTable(order_per_person);
+            renderCasherTable(peopleData);
+        }
+        refreshAll()
+        // addUsers();
+        // addItemsToList();
+        // generateBlocks(order_per_person);
+        // generateReceiptTable(order_per_person);
+        // -----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+    </script>
+</body>
+
+</html>
